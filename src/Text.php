@@ -15,6 +15,16 @@ class Text
         return $this->text;
     }
 
+    public function append(string $text): self
+    {
+        return new self($this->text.$text);
+    }
+
+    public function length(): int
+    {
+        return \strlen($this->text);
+    }
+
     public function maxLineLength(int $length = null): self
     {
         if (null === $length) {
@@ -27,6 +37,21 @@ class Text
         }
 
         return self::fromArray($wrapped);
+    }
+
+    public function padLeft(string $char, int $length): self
+    {
+        return new self(\str_pad($this->text, $this->length() + $length, $char, \STR_PAD_LEFT));
+    }
+
+    public function padRight(string $char, int $length): self
+    {
+        return new self(\str_pad($this->text, $this->length() + $length, $char, \STR_PAD_RIGHT));
+    }
+
+    public function prepend(string $text): self
+    {
+        return new self($text.$this->text);
     }
 
     public function sanitize(): self

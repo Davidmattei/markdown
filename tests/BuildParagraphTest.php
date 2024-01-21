@@ -26,8 +26,8 @@ class BuildParagraphTest extends TestCase
     {
         $expected ??= 'Markdown is a lightweight markup language';
 
-        $markdownBuilder = MarkdownBuilder::create($options);
-        $markdownBuilder->addParagraph($text);
+        $markdownBuilder = new MarkdownBuilder($options);
+        $markdownBuilder->p($text);
 
         $this->assertEquals($expected, $markdownBuilder->build());
     }
