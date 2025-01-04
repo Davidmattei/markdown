@@ -4,6 +4,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
+         cacheDirectory=".cache/phpunit"
          failOnRisky="true"
          failOnWarning="false"
          failOnEmptyTestSuite="true"
