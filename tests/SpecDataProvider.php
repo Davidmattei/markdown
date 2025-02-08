@@ -8,7 +8,7 @@ class SpecDataProvider
 {
     public static function getData(): array
     {
-        if (!$contents = file_get_contents(__DIR__ . '/spec/commonmark.0.30.json')) {
+        if (!$contents = file_get_contents(__DIR__ . '/spec/commonmark-spec.json')) {
             throw new RuntimeException('Failed to read spec test data');
         }
 
