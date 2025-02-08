@@ -15,8 +15,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+        <testsuite name="default">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
@@ -26,8 +26,7 @@
         </include>
     </source>
 
-    <coverage includeUncoveredFiles="true"
-              pathCoverage="false"
+    <coverage pathCoverage="false"
               ignoreDeprecatedCodeUnits="true"
               disableCodeCoverageIgnore="true">
     </coverage>
