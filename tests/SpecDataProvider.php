@@ -6,22 +6,26 @@ namespace Fabricity\Markdown\Tests;
 
 class SpecDataProvider
 {
+    /** @return array<mixed> */
     public static function getData(): array
     {
         if (!$contents = file_get_contents(__DIR__ . '/spec/commonmark-spec.json')) {
-            throw new RuntimeException('Failed to read spec test data');
+            throw new \RuntimeException('Failed to read spec test data');
         }
 
-        $json = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('Invalid JSON: ' . json_last_error_msg());
+        /** @var array<int, array{'example': string, 'section': string, 'markdown': string, 'html': string}> $json */
+        $json = \json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+        if (\json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException('Invalid JSON: ' . \json_last_error_msg());
         }
 
-        return array_reduce($json, function ($carry, $item) {
+        /** @var array<mixed> $data */
+        $data = array_reduce($json, static function (array $carry, array $item) {
             $name = sprintf('Example %d [%s]', $item['example'], $item['section']);
             $carry[$name] = [$item['markdown'], $item['html']];
             return $carry;
         }, []);
+
+        return $data;
     }
 }
