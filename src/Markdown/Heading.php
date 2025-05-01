@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Markdown;
 
-class Heading implements TypeInterface
+use Fabricity\Markdown\Element\ElementInterface;
+
+class Heading implements ElementInterface
 {
     public const string REGEX = '/^(?<level>#{1,6})\s+(?<title>.*)/';
 

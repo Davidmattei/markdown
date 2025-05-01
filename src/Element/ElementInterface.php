@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Element;
 
-interface TypeInterface
+interface ElementInterface
 {
     /** @param array<mixed> $match */
     public static function fromMatch(array $match): self;

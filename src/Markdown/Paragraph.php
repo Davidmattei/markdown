@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Markdown;
 
-class Paragraph implements TypeInterface
+use Fabricity\Markdown\Element\ElementInterface;
+
+class Paragraph implements ElementInterface
 {
     public const string REGEX = '/^(?<content>.*(?:\r?\n(?!\r?\n).*)*)/';
 

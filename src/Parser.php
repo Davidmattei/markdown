@@ -6,9 +6,9 @@ namespace Fabricity\Markdown;
 
 use Fabricity\Markdown\Element\Element;
 use Fabricity\Markdown\Element\ElementCollection;
-use Fabricity\Markdown\Element\Type\Heading;
-use Fabricity\Markdown\Element\Type\Paragraph;
-use Fabricity\Markdown\Element\Type\TypeInterface;
+use Fabricity\Markdown\Element\ElementInterface;
+use Fabricity\Markdown\Markdown\Heading;
+use Fabricity\Markdown\Markdown\Paragraph;
 
 class Parser
 {
@@ -37,12 +37,12 @@ class Parser
             }
         }
 
-        $htmlTypes = \array_map(static fn (TypeInterface $type): string => $type->toHtml(), $types);
+        $htmlTypes = \array_map(static fn (ElementInterface $type): string => $type->toHtml(), $types);
 
         return \implode(\PHP_EOL, $htmlTypes);
     }
 
-    private function match(string $input): ?TypeInterface
+    private function match(string $input): ?ElementInterface
     {
         foreach ($this->elements as $element) {
             if (\preg_match('/^\n/', $input, $match)) {
@@ -54,7 +54,7 @@ class Parser
             if (\preg_match($element->regex, $input, $match)) {
                 $this->cursor += \strlen($match[0]);
 
-                return $element->typeClass::fromMatch($match);
+                return $element->markdownClass::fromMatch($match);
             }
         }
 

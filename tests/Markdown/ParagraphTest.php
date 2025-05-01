@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Element\Type;
+namespace Fabricity\Markdown\Tests\Markdown;
 
-use Fabricity\Markdown\Element\Type\Heading;
 use Fabricity\Markdown\Tests\AbstractMarkdownTestCase;
-use Fabricity\Markdown\Tests\SpecDataProvider;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\DataProviderExternal;
-use PHPUnit\Framework\TestCase;
 
 class ParagraphTest extends AbstractMarkdownTestCase
 {

@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Element;
 
-use Fabricity\Markdown\Element\Type\TypeInterface;
-
 readonly class Element
 {
     public function __construct(
-        /** @var class-string<TypeInterface> */
-        public string $typeClass,
+        /** @var class-string<ElementInterface> */
+        public string $markdownClass,
         public string $regex,
-        public int $priority = 0,
+        public int    $priority = 0,
     ) {
     }
 }
