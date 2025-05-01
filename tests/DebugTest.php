@@ -14,19 +14,28 @@ class DebugTest extends TestCase
         $input = <<<MARKDOWN
 # Title
 
-## Sub title
-
-# Cool 3
 
 
-### Test 1
+blablabla
+coool
+
+
+
+fdsfsqdfqs
+test,
+test,
+
+
+
 MARKDOWN;
 
         $result = <<<HTML
 <h1 id="title">Title</h1>
-<h2 id="sub-title">Sub title</h2>
-<h1 id="cool-3">Cool 3</h1>
-<h3 id="test-1">Test 1</h3>
+<p>blablabla
+coool</p>
+<p>fdsfsqdfqs
+test,
+test,</p>
 HTML;
 
         $markdown = new Markdown();

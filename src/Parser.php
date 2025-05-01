@@ -7,6 +7,7 @@ namespace Fabricity\Markdown;
 use Fabricity\Markdown\Element\Element;
 use Fabricity\Markdown\Element\ElementCollection;
 use Fabricity\Markdown\Element\Type\Heading;
+use Fabricity\Markdown\Element\Type\Paragraph;
 use Fabricity\Markdown\Element\Type\TypeInterface;
 
 class Parser
@@ -19,6 +20,7 @@ class Parser
     {
         $this->elements = new ElementCollection()
             ->add(new Element(Heading::class, Heading::REGEX))
+            ->add(new Element(Paragraph::class, Paragraph::REGEX))
         ;
     }
 
