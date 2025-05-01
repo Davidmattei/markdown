@@ -8,7 +8,7 @@ use Fabricity\Markdown\Markdown;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
-class PhpMarkdownTest extends TestCase
+class SpecTest extends TestCase
 {
     #[DataProviderExternal(SpecDataProvider::class, 'getData')]
     public function testParse(string $inputText, string $expectedHtml): void
