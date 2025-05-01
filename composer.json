@@ -26,7 +26,7 @@
         "friendsofphp/php-cs-fixer": "^3.0"
     },
     "scripts": {
-        "phpcs": "php-cs-fixer fix",
+        "phpcs": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
         "phpstan": "phpstan analyse -c phpstan.neon.dist --memory-limit=128M",
         "phpunit": "phpunit",
         "test": [

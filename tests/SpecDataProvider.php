@@ -9,20 +9,21 @@ class SpecDataProvider
     /** @return array<mixed> */
     public static function getData(): array
     {
-        if (!$contents = file_get_contents(__DIR__ . '/spec/commonmark-spec.json')) {
+        if (!$contents = \file_get_contents(__DIR__.'/spec/commonmark-spec.json')) {
             throw new \RuntimeException('Failed to read spec test data');
         }
 
         /** @var array<int, array{'example': string, 'section': string, 'markdown': string, 'html': string}> $json */
         $json = \json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
-        if (\json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('Invalid JSON: ' . \json_last_error_msg());
+        if (JSON_ERROR_NONE !== \json_last_error()) {
+            throw new \RuntimeException('Invalid JSON: '.\json_last_error_msg());
         }
 
         /** @var array<mixed> $data */
-        $data = array_reduce($json, static function (array $carry, array $item) {
-            $name = sprintf('Example %d [%s]', $item['example'], $item['section']);
+        $data = \array_reduce($json, static function (array $carry, array $item) {
+            $name = \sprintf('Example %d [%s]', $item['example'], $item['section']);
             $carry[$name] = [$item['markdown'], $item['html']];
+
             return $carry;
         }, []);
 

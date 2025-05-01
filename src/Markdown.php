@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown;
 
-use Fabricity\Markdown\Token\Tokenizer;
-
 class Markdown
 {
+    private Parser $parser;
+
+    public function __construct()
+    {
+        $this->parser = new Parser();
+    }
+
     public function parse(string $text): string
     {
-        $tokens = new Tokenizer($text)->getTokens();
-
-
-        return $text;
+        return $this->parser->parse($text);
     }
 }
