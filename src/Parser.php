@@ -39,7 +39,7 @@ class Parser
 
         $htmlTypes = \array_map(static fn (ElementInterface $type): string => $type->toHtml(), $types);
 
-        return \implode(\PHP_EOL, $htmlTypes);
+        return \implode(\PHP_EOL, $htmlTypes).\PHP_EOL;
     }
 
     private function match(string $input): ?ElementInterface

@@ -8,7 +8,7 @@ use Fabricity\Markdown\Element\ElementInterface;
 
 class Paragraph implements ElementInterface
 {
-    public const string REGEX = '/^(?<content>.*(?:\r?\n(?!\r?\n).*)*)/';
+    public const string REGEX = '/^(?<content>(?:[^\r\n].*(?:\r?\n(?!\r?\n)[^\r\n].*)*)?)/';
 
     private function __construct(
         public readonly string $content,

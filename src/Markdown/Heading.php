@@ -24,23 +24,10 @@ class Heading implements ElementInterface
 
     public function toHtml(): string
     {
-        return \vsprintf('<h%d id="%s">%s</h%d>', [
+        return \vsprintf('<h%d>%s</h%d>', [
             $this->level,
-            $this->getId(),
             $this->title,
             $this->level,
         ]);
-    }
-
-    private function getId(): string
-    {
-        $text = \mb_strtolower($this->title);
-        $text = \preg_replace('/[^a-z0-9]+/u', '-', $text);
-
-        if (null === $text) {
-            throw new \RuntimeException('Could not generate id from text');
-        }
-
-        return \trim($text, '-');
     }
 }
