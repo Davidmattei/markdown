@@ -9,13 +9,13 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class ParagraphTest extends AbstractMarkdownTestCase
 {
-    #[DataProvider('paragraphProvider')]
+    #[DataProvider('markdownProvider')]
     public function testParagraph(string $markdown, string $html): void
     {
         $this->assertMarkdown($markdown, $html);
     }
 
-    public static function paragraphProvider(): array
+    public static function markdownProvider(): array
     {
         return [
             'simple' => ['Small', "<p>Small</p>\n"],

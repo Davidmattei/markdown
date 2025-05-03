@@ -9,13 +9,13 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class HeadingTest extends AbstractMarkdownTestCase
 {
-    #[DataProvider('headingProvider')]
-    public function testHeadings(string $markdown, string $html): void
+    #[DataProvider('markdownProvider')]
+    public function testHeading(string $markdown, string $html): void
     {
         $this->assertMarkdown($markdown, $html);
     }
 
-    public static function headingProvider(): array
+    public static function markdownProvider(): array
     {
         return [
             'heading 1' => ['# Heading 1', "<h1>Heading 1</h1>\n"],

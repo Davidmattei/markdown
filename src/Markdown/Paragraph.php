@@ -11,18 +11,18 @@ class Paragraph implements ElementInterface
     public const string REGEX = '/^(?<content>(?:[^\r\n].*(?:\r?\n(?!\r?\n)[^\r\n].*)*)?)/';
 
     private function __construct(
-        public readonly string $content,
+        public readonly Text $content,
     ) {
     }
 
     /** @param array{ 'content': string } $match */
     public static function fromMatch(array $match): self
     {
-        return new self($match['content']);
+        return new self(new Text($match['content']));
     }
 
     public function toHtml(): string
     {
-        return \sprintf('<p>%s</p>', $this->content);
+        return \sprintf('<p>%s</p>', $this->content->toHtml());
     }
 }
