@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown;
 
+use Fabricity\Markdown\Parser\Input;
+use Fabricity\Markdown\Parser\Parser;
+
 class Markdown
 {
     private Parser $parser;
@@ -15,6 +18,6 @@ class Markdown
 
     public function parse(string $text): string
     {
-        return $this->parser->parse($text);
+        return $this->parser->parse(new Input($text));
     }
 }

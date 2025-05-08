@@ -18,12 +18,12 @@ class HeadingTest extends AbstractMarkdownTestCase
     public static function markdownProvider(): array
     {
         return [
-            'heading 1' => ['# Heading 1', "<h1>Heading 1</h1>\n"],
-            'heading 2' => ['## Heading 2', "<h2>Heading 2</h2>\n"],
-            'heading 3' => ['### Heading 3', "<h3>Heading 3</h3>\n"],
-            'heading 4' => ['#### Heading 4', "<h4>Heading 4</h4>\n"],
-            'heading 5' => ['##### Heading 5', "<h5>Heading 5</h5>\n"],
-            'heading 6' => ['###### Heading 6', "<h6>Heading 6</h6>\n"],
+            'heading 1' => ["# Heading 1\n", "<h1>Heading 1</h1>\n"],
+            'heading 2' => ["## Heading 2\n", "<h2>Heading 2</h2>\n"],
+            'heading 3' => ["### Heading 3\n", "<h3>Heading 3</h3>\n"],
+            'heading 4' => ["#### Heading 4\n", "<h4>Heading 4</h4>\n"],
+            'heading 5' => ["##### Heading 5\n", "<h5>Heading 5</h5>\n"],
+            'heading 6' => ["###### Heading 6\n", "<h6>Heading 6</h6>\n"],
             'no heading 7' => ["####### foo\n", "<p>####### foo</p>\n"],
         ];
     }

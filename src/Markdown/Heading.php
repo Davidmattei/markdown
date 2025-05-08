@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fabricity\Markdown\Markdown;
 
 use Fabricity\Markdown\Element\ElementInterface;
+use Fabricity\Markdown\Parser\Input;
 
 class Heading implements ElementInterface
 {
@@ -16,10 +17,16 @@ class Heading implements ElementInterface
     ) {
     }
 
-    /** @param array{ 'level': string, 'title': string } $match */
-    public static function fromMatch(array $match): self
+    public static function match(Input $input): ?self
     {
-        return new self(\strlen($match['level']), $match['title']);
+        $matches = [];
+        if (!$input->match(self::REGEX, $matches)) {
+            return null;
+        }
+
+        $input->offsetText($matches[0]);
+
+        return new self(\strlen($matches['level']), $matches['title']);
     }
 
     public function toHtml(): string

@@ -9,7 +9,6 @@ readonly class Element
     public function __construct(
         /** @var class-string<ElementInterface> */
         public string $markdownClass,
-        public string $regex,
         public int    $priority = 0,
     ) {
     }

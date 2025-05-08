@@ -18,10 +18,10 @@ class ParagraphTest extends AbstractMarkdownTestCase
     public static function markdownProvider(): array
     {
         return [
-            'simple' => ['Small', "<p>Small</p>\n"],
+            'simple' => ["Small\n", "<p>Small</p>\n"],
             'with new line' => ["Small\n", "<p>Small</p>\n"],
-            'multiline' => ["Line 1\nLin 2", "<p>Line 1\nLin 2</p>\n"],
-            'spaces' =>  ["space   space  space ", "<p>space   space  space </p>\n"],
+            'multiline' => ["Line 1\nLin 2\n", "<p>Line 1\nLin 2</p>\n"],
+            'spaces' =>  ["space   space  space \n", "<p>space   space  space </p>\n"],
         ];
     }
 }
