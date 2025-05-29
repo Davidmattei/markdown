@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class ParagraphTest extends AbstractMarkdownTestCase
 {
+    /** @return array<mixed> */
     public static function markdownToHtml(): array
     {
         return [

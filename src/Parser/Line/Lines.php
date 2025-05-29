@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Line;
 
+/** @implements \IteratorAggregate<Line> */
 class Lines implements \IteratorAggregate
 {
     private string $text;

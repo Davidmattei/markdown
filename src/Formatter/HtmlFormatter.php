@@ -34,23 +34,41 @@ class HtmlFormatter
 
     private function asciiPunctuationCharsEscaped(string $text): string
     {
-        return \preg_replace('/\\\\([!"#$%&\'()*+,\-.\/:;<=>?@\[\\\\\]^_`{|}~])/', '$1', $text);
+        $replace = \preg_replace('/\\\\([!"#$%&\'()*+,\-.\/:;<=>?@\[\\\\\]^_`{|}~])/', '$1', $text);
+
+        if (!is_string($replace)) {
+            throw new \RuntimeException('Expected a non-empty string');
+        }
+
+        return $replace;
     }
 
     private function escapeContent(string $content): string
     {
+        /** @var array<callable(string): string> $filters */
         $filters = [
             [$this, 'asciiPunctuationCharsEscaped'],
             [$this, 'htmlSpecialChars'],
             [$this, 'hardLineBreak'],
         ];
 
-        return \array_reduce($filters, static fn ($carry, $callback) => $callback($carry), $content);
+        $escaped = $content;
+        foreach ($filters as $filter) {
+            $escaped = $filter($escaped);
+        }
+
+        return $escaped;
     }
 
     private function hardLineBreak(string $input): string
     {
-        return \preg_replace('/\\\\\n/', '<br />'.\PHP_EOL, $input);
+        $result = \preg_replace('/\\\\\n/', '<br />'.\PHP_EOL, $input);
+
+        if (!is_string($result)) {
+            throw new \RuntimeException('Expected a non-empty string');
+        }
+
+        return $result;
     }
 
     private function htmlSpecialChars(string $text): string

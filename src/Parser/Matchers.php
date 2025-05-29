@@ -9,6 +9,7 @@ use Fabricity\Markdown\Parser\Matcher\MatcherInterface;
 use Fabricity\Markdown\Parser\Matcher\ParagraphMatcher;
 use Fabricity\Markdown\Parser\Matcher\ThematicBreakMatcher;
 
+/** @implements \IteratorAggregate<MatcherInterface> */
 class Matchers implements \IteratorAggregate
 {
     /** @var MatcherInterface[] */
