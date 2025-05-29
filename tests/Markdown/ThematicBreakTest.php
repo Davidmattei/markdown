@@ -9,12 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class ThematicBreakTest extends AbstractMarkdownTestCase
 {
-    #[DataProvider('markdownToHtml')]
-    public function testHtml(string $markdown, string $html): void
-    {
-        $this->assertHtml($markdown, $html);
-    }
-
     public static function markdownToHtml(): array
     {
         return [
@@ -28,5 +22,11 @@ class ThematicBreakTest extends AbstractMarkdownTestCase
             'spaces in between stars' => [" * * *\n", "<hr />\n"],
             'in paragraph' => ["Test\n---\nTest", "<p>Test</p>\n<hr />\n<p>Test</p>\n"],
         ];
+    }
+
+    #[DataProvider('markdownToHtml')]
+    public function testHtml(string $markdown, string $html): void
+    {
+        $this->assertHtml($markdown, $html);
     }
 }

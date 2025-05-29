@@ -9,12 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class ParagraphTest extends AbstractMarkdownTestCase
 {
-    #[DataProvider('markdownToHtml')]
-    public function testHtml(string $markdown, string $html): void
-    {
-        $this->assertHtml($markdown, $html);
-    }
-
     public static function markdownToHtml(): array
     {
         return [
@@ -25,12 +19,18 @@ class ParagraphTest extends AbstractMarkdownTestCase
             'spaces' =>  ["space   space  space \n", "<p>space   space  space </p>\n"],
             'Test ASCII punctuation character may be backslash-escaped' => [
                 "\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}\\~\n",
-                "<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~</p>\n"
+                "<p>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~</p>\n",
             ],
             'Test hard line break' => [
                 "foo\\\nbar\n",
-                "<p>foo<br />\nbar</p>\n"
-            ]
+                "<p>foo<br />\nbar</p>\n",
+            ],
         ];
+    }
+
+    #[DataProvider('markdownToHtml')]
+    public function testHtml(string $markdown, string $html): void
+    {
+        $this->assertHtml($markdown, $html);
     }
 }

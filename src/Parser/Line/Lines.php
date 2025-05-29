@@ -10,7 +10,7 @@ class Lines implements \IteratorAggregate
 
     public function __construct(string $text)
     {
-        $this->text = str_replace(["\r\n", "\r"], "\n", $text);
+        $this->text = \str_replace(["\r\n", "\r"], "\n", $text);
     }
 
     /**
@@ -19,21 +19,22 @@ class Lines implements \IteratorAggregate
     public function getIterator(): \Traversable
     {
         $offset = 0;
-        $length = strlen($this->text);
+        $length = \strlen($this->text);
 
         while ($offset < $length) {
-            $pos = strpos($this->text, "\n", $offset);
+            $pos = \strpos($this->text, "\n", $offset);
 
-            if ($pos === false) {
-                yield new Line(substr($this->text, $offset));
+            if (false === $pos) {
+                yield new Line(\substr($this->text, $offset));
+
                 return;
             }
 
-            yield new Line(substr($this->text, $offset, $pos - $offset));
+            yield new Line(\substr($this->text, $offset, $pos - $offset));
             $offset = $pos + 1;
         }
 
-        if ($length > 0 && $this->text[$length - 1] === "\n") {
+        if ($length > 0 && "\n" === $this->text[$length - 1]) {
             yield new Line();
         }
     }

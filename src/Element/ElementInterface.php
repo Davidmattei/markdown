@@ -6,5 +6,4 @@ namespace Fabricity\Markdown\Element;
 
 interface ElementInterface
 {
-
 }

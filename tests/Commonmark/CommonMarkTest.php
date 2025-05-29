@@ -6,19 +6,10 @@ namespace Fabricity\Markdown\Tests\Commonmark;
 
 use Fabricity\Markdown\Markdown;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
 
 class CommonMarkTest extends TestCase
 {
-    #[DataProvider('getData')]
-    public function testParse(string $inputText, string $expectedHtml): void
-    {
-        $result = new Markdown()->toHtml($inputText);
-
-        $this->assertEquals($expectedHtml, $result);
-    }
-
     /** @return array<mixed> */
     public static function getData(): array
     {
@@ -41,5 +32,13 @@ class CommonMarkTest extends TestCase
         }, []);
 
         return $data;
+    }
+
+    #[DataProvider('getData')]
+    public function testParse(string $inputText, string $expectedHtml): void
+    {
+        $result = new Markdown()->toHtml($inputText);
+
+        $this->assertEquals($expectedHtml, $result);
     }
 }

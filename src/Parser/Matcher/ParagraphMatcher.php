@@ -13,6 +13,7 @@ class ParagraphMatcher implements MatcherInterface
     {
         if ($context->line->isNewLine()) {
             $context->newLine();
+
             return;
         }
 

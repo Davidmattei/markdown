@@ -7,8 +7,8 @@ namespace Fabricity\Markdown\Element;
 readonly class Heading implements ElementInterface
 {
     public function __construct(
-        public int    $level,
+        public int $level,
         public string $title,
-    )
-    {}
+    ) {
+    }
 }

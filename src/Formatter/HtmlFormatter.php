@@ -16,20 +16,25 @@ class HtmlFormatter
         $output = '';
 
         foreach ($document->getElements() as $element) {
-            $output .= match(get_class($element)) {
+            $output .= match(\get_class($element)) {
                 Heading::class => \vsprintf(
                     format: '<h%d>%s</h%d>',
                     values: [$element->level, $element->title, $element->level]
                 ),
                 ThematicBreak::class => '<hr />',
                 Paragraph::class => \sprintf('<p>%s</p>', $this->escapeContent($element->content)),
-                default => ''
+                default => '',
             };
 
             $output .= PHP_EOL;
         }
 
         return $output;
+    }
+
+    private function asciiPunctuationCharsEscaped(string $text): string
+    {
+        return \preg_replace('/\\\\([!"#$%&\'()*+,\-.\/:;<=>?@\[\\\\\]^_`{|}~])/', '$1', $text);
     }
 
     private function escapeContent(string $content): string
@@ -40,21 +45,16 @@ class HtmlFormatter
             [$this, 'hardLineBreak'],
         ];
 
-        return array_reduce($filters, static fn($carry, $callback) => $callback($carry), $content);
-    }
-
-    private function asciiPunctuationCharsEscaped(string $text): string
-    {
-        return preg_replace('/\\\\([!"#$%&\'()*+,\-.\/:;<=>?@\[\\\\\]^_`{|}~])/', '$1', $text);
-    }
-
-    private function htmlSpecialChars(string $text): string
-    {
-        return htmlspecialchars($text, ENT_COMPAT | ENT_HTML5);
+        return \array_reduce($filters, static fn ($carry, $callback) => $callback($carry), $content);
     }
 
     private function hardLineBreak(string $input): string
     {
-        return preg_replace('/\\\\\n/', '<br />'.\PHP_EOL, $input);
+        return \preg_replace('/\\\\\n/', '<br />'.\PHP_EOL, $input);
+    }
+
+    private function htmlSpecialChars(string $text): string
+    {
+        return \htmlspecialchars($text, ENT_COMPAT | ENT_HTML5);
     }
 }

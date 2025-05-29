@@ -14,11 +14,22 @@ class Context
     private bool $parsed = false;
 
     public function __construct(
-        public Line               $line,
+        public Line $line,
         private readonly Document $document,
-        public ?ElementInterface  $element = null,
-    )
+        public ?ElementInterface $element = null,
+    ) {
+    }
+
+    public function isParsed(): bool
     {
+        return true === $this->parsed;
+    }
+
+    public function newElement(ElementInterface $element): void
+    {
+        $this->document->addElement($element);
+        $this->element = $element;
+        $this->parsed = true;
     }
 
     public function newLine(): void
@@ -30,23 +41,12 @@ class Context
     public function updateElement(): void
     {
         if ($this->element instanceof Paragraph) {
-            $this->element->content .= "\n" . $this->line->text;
+            $this->element->content .= "\n".$this->line->text;
             $this->parsed = true;
+
             return;
         }
 
         throw new \RuntimeException('Could not update line');
-    }
-
-    public function newElement(ElementInterface $element): void
-    {
-        $this->document->addElement($element);
-        $this->element = $element;
-        $this->parsed = true;
-    }
-
-    public function isParsed(): bool
-    {
-        return $this->parsed === true;
     }
 }

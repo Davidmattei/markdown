@@ -9,12 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class HeadingTest extends AbstractMarkdownTestCase
 {
-    #[DataProvider('markdownToHtml')]
-    public function testHtml(string $markdown, string $html): void
-    {
-        $this->assertHtml($markdown, $html);
-    }
-
     public static function markdownToHtml(): array
     {
         return [
@@ -26,5 +20,11 @@ class HeadingTest extends AbstractMarkdownTestCase
             'heading 6' => ["###### Heading 6\n", "<h6>Heading 6</h6>\n"],
             'no heading 7' => ["####### foo\n", "<p>####### foo</p>\n"],
         ];
+    }
+
+    #[DataProvider('markdownToHtml')]
+    public function testHtml(string $markdown, string $html): void
+    {
+        $this->assertHtml($markdown, $html);
     }
 }

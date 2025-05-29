@@ -6,36 +6,24 @@ namespace Fabricity\Markdown\Parser\Line;
 
 class Line
 {
-    public function __construct(public string $text = "")
+    public function __construct(public string $text = '')
     {
     }
 
-    public function trimPrefix(int $count, string $char = ' '): Line
+    public function containsOnly(string ...$chars): bool
     {
-        $i = 0;
-        $length = strlen($this->text);
-        while ($i < $count && $i < $length && $this->text[$i] === $char) {
-            $i++;
-        }
-
-        return new Line(substr($this->text, $i));
+        return \strspn($this->text, \implode('', $chars)) === \strlen($this->text);
     }
 
-    public function startsWith(string ...$chars): bool
+    public function isNewLine(): bool
     {
-        foreach ($chars as $char) {
-            if (str_starts_with($this->text, $char)) {
-                return true;
-            }
-        }
-
-        return false;
+        return '' === $this->text;
     }
 
     public function occurs(int $minCount, string ...$chars): bool
     {
         foreach ($chars as $char) {
-            if (substr_count($this->text, $char) >= $minCount) {
+            if (\substr_count($this->text, $char) >= $minCount) {
                 return true;
             }
         }
@@ -43,13 +31,25 @@ class Line
         return false;
     }
 
-    public function containsOnly(string ...$chars): bool
+    public function startsWith(string ...$chars): bool
     {
-        return strspn($this->text, \implode('', $chars)) === strlen($this->text);
+        foreach ($chars as $char) {
+            if (\str_starts_with($this->text, $char)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function isNewLine(): bool
+    public function trimPrefix(int $count, string $char = ' '): Line
     {
-        return $this->text === "";
+        $i = 0;
+        $length = \strlen($this->text);
+        while ($i < $count && $i < $length && $this->text[$i] === $char) {
+            ++$i;
+        }
+
+        return new Line(\substr($this->text, $i));
     }
 }
