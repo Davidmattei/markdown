@@ -4,61 +4,42 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser;
 
-use Fabricity\Markdown\Element\Element;
-use Fabricity\Markdown\Element\ElementCollection;
-use Fabricity\Markdown\Element\ElementInterface;
-use Fabricity\Markdown\Markdown\Heading;
-use Fabricity\Markdown\Markdown\Paragraph;
-use Fabricity\Markdown\Markdown\ThematicBreak;
+use Fabricity\Markdown\Element\Document;
+use Fabricity\Markdown\Parser\Line\Lines;
 
 class Parser
 {
-    /** @var array<int, class-string<ElementInterface>> */
-    public array $elements;
-
-    private int $cursor = 0;
+    private Matchers $matchers;
 
     public function __construct()
     {
-        $this->elements = [
-            Heading::class,
-            Paragraph::class,
-//            ThematicBreak::class
-        ];
+        $this->matchers = new Matchers();
     }
 
-    public function parse(Input $input): string
+    public function parse(string $text): Document
     {
-        $types = [];
+        $document = new Document();
 
-        while ($input->hasText()) {
-            if ($input->isNewLine()) {
-                continue;
+        $element = null;
+        $lines = new Lines($text);
+
+        foreach ($lines as $line) {
+            $context = new Context($line, $document, $element);
+
+            foreach ($this->matchers as $matcher) {
+                $matcher->match($context);
+
+                if ($context->isParsed()) {
+                    $element = $context->element;
+                    break;
+                }
             }
 
-            if (null === $element = $this->matchElements($input)) {
-                throw new \RuntimeException('Could not parse input');
+            if (!$context->isParsed()) {
+                throw new \RuntimeException('Could not parse line');
             }
-
-            $types[] = $element;
         }
 
-        $htmlTypes = \array_map(static fn (ElementInterface $type): string => $type->toHtml(), $types);
-
-        return \implode(\PHP_EOL, $htmlTypes).\PHP_EOL;
-    }
-
-
-    private function matchElements(Input $input): ?ElementInterface
-    {
-        foreach ($this->elements as $element) {
-            if (null === $type = $element::match($input)) {
-                continue;
-            }
-
-            return $type;
-        }
-
-        return null;
+        return $document;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown;
 
-use Fabricity\Markdown\Parser\Input;
+use Fabricity\Markdown\Formatter\HtmlFormatter;
 use Fabricity\Markdown\Parser\Parser;
 
 class Markdown
@@ -16,8 +16,10 @@ class Markdown
         $this->parser = new Parser();
     }
 
-    public function parse(string $text): string
+    public function toHtml(string $text): string
     {
-        return $this->parser->parse(new Input($text));
+        $document = $this->parser->parse($text);
+
+        return new HtmlFormatter()->format($document);
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Element;
 
-interface ElementInterface
+class ThematicBreak implements ElementInterface
 {
-
 }

@@ -16,8 +16,8 @@ class AbstractMarkdownTestCase extends TestCase
         $this->markdown = new Markdown();
     }
 
-    protected function assertMarkdown(string $markdown, string $html): void
+    protected function assertHtml(string $markdown, string $html): void
     {
-        $this->assertSame($html, $this->markdown->parse($markdown));
+        $this->assertSame($html, $this->markdown->toHtml($markdown));
     }
 }

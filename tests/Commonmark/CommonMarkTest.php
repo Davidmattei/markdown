@@ -14,7 +14,7 @@ class CommonMarkTest extends TestCase
     #[DataProvider('getData')]
     public function testParse(string $inputText, string $expectedHtml): void
     {
-        $result = new Markdown()->parse($inputText);
+        $result = new Markdown()->toHtml($inputText);
 
         $this->assertEquals($expectedHtml, $result);
     }
