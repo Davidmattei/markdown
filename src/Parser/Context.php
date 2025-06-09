@@ -21,7 +21,7 @@ class Context
 
     public function advance(): void
     {
-        $this->lines->advance();
+        $this->lines->cursor->advanceLine();
     }
 
     public function clearElement(): self

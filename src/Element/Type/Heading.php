@@ -14,7 +14,7 @@ class Heading extends AbstractElement
     ) {
     }
 
-    /** @return array{'type': 'Heading', 'level': string, 'title': string} */
+    /** @return array{'type': 'Heading', 'level': int, 'title': string} */
     public function jsonSerialize(): array
     {
         return [

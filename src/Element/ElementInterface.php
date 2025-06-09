@@ -6,5 +6,5 @@ namespace Fabricity\Markdown\Element;
 
 interface ElementInterface
 {
-    public function setParent(ParentInterface $parent);
+    public function setParent(ParentInterface $parent): void;
 }

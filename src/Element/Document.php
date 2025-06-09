@@ -13,6 +13,7 @@ class Document implements ParentInterface, \JsonSerializable
         $this->elements = new Elements($this);
     }
 
+    /** @return array{'type': 'Document', 'elements': Elements} */
     public function jsonSerialize(): array
     {
         return [

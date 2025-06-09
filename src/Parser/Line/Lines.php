@@ -6,27 +6,18 @@ namespace Fabricity\Markdown\Parser\Line;
 
 class Lines
 {
-    private int $count;
-    private int $index;
+    public Cursor $cursor;
 
     /** @param Line[] $lines */
     private function __construct(
         private readonly array $lines,
     ) {
-        $this->index = 0;
-        $this->count = \count($this->lines);
-    }
-
-    public function advance(): void
-    {
-        if ($this->index + 1 <= $this->count) {
-            ++$this->index;
-        }
+        $this->cursor = new Cursor(\count($this->lines));
     }
 
     public function current(): Line
     {
-        return $this->lines[$this->index];
+        return $this->lines[$this->cursor->getLine()];
     }
 
     public static function fromText(string $text): self
@@ -56,37 +47,27 @@ class Lines
         return new self($lines);
     }
 
-    public function getIndex(): int
-    {
-        return $this->index;
-    }
-
-    public function hasLines(): bool
-    {
-        return $this->index < $this->count;
-    }
-
     public function next(): ?Line
     {
-        return $this->lines[$this->index + 1];
+        return $this->lines[$this->cursor->getLine() + 1];
     }
 
     /** @return Line[] */
     public function peekNext(int $count = 1): array
     {
-        return \array_slice($this->lines, $this->index + 1, $count);
+        return \array_slice($this->lines, $this->cursor->getLine() + 1, $count);
     }
 
     /** @return Line[] */
     public function peekPrevious(int $count = 1): array
     {
-        $start = \max(0, $this->index - $count);
+        $start = \max(0, $this->cursor->getLine() - $count);
 
-        return \array_slice($this->lines, $start, $this->index - $start);
+        return \array_slice($this->lines, $start, $this->cursor->getLine() - $start);
     }
 
     public function previous(): ?Line
     {
-        return $this->lines[$this->index - 1];
+        return $this->lines[$this->cursor->getLine() - 1];
     }
 }

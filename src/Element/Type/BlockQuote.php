@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Fabricity\Markdown\Element\Type;
 
 use Fabricity\Markdown\Element\AbstractElement;
-use Fabricity\Markdown\Element\ElementInterface;
 use Fabricity\Markdown\Element\Elements;
 use Fabricity\Markdown\Element\ParentInterface;
 use Fabricity\Markdown\Element\ParentTrait;
@@ -19,7 +18,7 @@ class BlockQuote extends AbstractElement implements ParentInterface
         $this->elements = new Elements($this);
     }
 
-    /** @return array{'type': 'BlockQuote', 'elements': ElementInterface[]} */
+    /** @return array{'type': 'BlockQuote', 'elements': Elements} */
     public function jsonSerialize(): array
     {
         return [
