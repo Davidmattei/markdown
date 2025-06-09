@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Element;
 
-class ThematicBreak implements ElementInterface
+interface ParentInterface
 {
+    public function getElements(): Elements;
 }

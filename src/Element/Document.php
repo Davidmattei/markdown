@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Element;
 
-class Document
+class Document implements ParentInterface, \JsonSerializable
 {
-    /** @var ElementInterface[] */
-    private array $elements = [];
+    use ParentTrait;
 
-    public function addElement(ElementInterface $element): void
+    public function __construct()
     {
-        $this->elements[] = $element;
+        $this->elements = new Elements($this);
     }
 
-    /**
-     * @return ElementInterface[]
-     */
-    public function getElements(): array
+    public function jsonSerialize(): array
     {
-        return $this->elements;
+        return [
+            'type' => 'Document',
+            'elements' => $this->elements,
+        ];
     }
 }

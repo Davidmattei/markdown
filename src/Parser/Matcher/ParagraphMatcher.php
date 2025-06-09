@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Paragraph;
+use Fabricity\Markdown\Element\Type\Paragraph;
 use Fabricity\Markdown\Parser\Context;
 
 class ParagraphMatcher implements MatcherInterface
 {
     public function match(Context $context): void
     {
-        if ($context->line->isNewLine()) {
-            $context->newLine();
+        $line = $context->line();
+
+        if ($line->isNewLine()) {
+            $context->clearElement()->advanceNextLine();
 
             return;
         }
 
         if ($context->element instanceof Paragraph) {
-            $context->updateElement();
+            $context->element->content .= "\n".$line->text;
         } else {
-            $context->newElement(new Paragraph($context->line->text));
+            $context->newElement(new Paragraph($line->text));
         }
+
+        $context->advanceNextLine();
     }
 }

@@ -20,10 +20,10 @@ class Line
         return '' === $this->text;
     }
 
-    public function occurs(int $minCount, string ...$chars): bool
+    public function occursAtLeast(int $occurs, string ...$chars): bool
     {
         foreach ($chars as $char) {
-            if (\substr_count($this->text, $char) >= $minCount) {
+            if (\substr_count($this->text, $char) >= $occurs) {
                 return true;
             }
         }

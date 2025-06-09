@@ -6,47 +6,41 @@ namespace Fabricity\Markdown\Parser;
 
 use Fabricity\Markdown\Element\Document;
 use Fabricity\Markdown\Element\ElementInterface;
-use Fabricity\Markdown\Element\Paragraph;
 use Fabricity\Markdown\Parser\Line\Line;
+use Fabricity\Markdown\Parser\Line\Lines;
 
 class Context
 {
-    private bool $parsed = false;
+    public ?ElementInterface $element = null;
 
     public function __construct(
-        public Line $line,
+        public readonly Lines $lines,
         private readonly Document $document,
-        public ?ElementInterface $element = null,
     ) {
     }
 
-    public function isParsed(): bool
+    public function advanceNextLine(): void
     {
-        return true === $this->parsed;
+        $this->lines->advance();
     }
 
-    public function newElement(ElementInterface $element): void
-    {
-        $this->document->addElement($element);
-        $this->element = $element;
-        $this->parsed = true;
-    }
-
-    public function newLine(): void
+    public function clearElement(): self
     {
         $this->element = null;
-        $this->parsed = true;
+
+        return $this;
     }
 
-    public function updateElement(): void
+    public function line(): Line
     {
-        if ($this->element instanceof Paragraph) {
-            $this->element->content .= "\n".$this->line->text;
-            $this->parsed = true;
+        return $this->lines->current();
+    }
 
-            return;
-        }
+    public function newElement(ElementInterface $element): self
+    {
+        $this->document->getElements()->push($element);
+        $this->element = $element;
 
-        throw new \RuntimeException('Could not update line');
+        return $this;
     }
 }

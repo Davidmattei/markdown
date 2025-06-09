@@ -2,12 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Parser;
-
-use Fabricity\Markdown\Parser\Matcher\HeadingMatcher;
-use Fabricity\Markdown\Parser\Matcher\MatcherInterface;
-use Fabricity\Markdown\Parser\Matcher\ParagraphMatcher;
-use Fabricity\Markdown\Parser\Matcher\ThematicBreakMatcher;
+namespace Fabricity\Markdown\Parser\Matcher;
 
 /** @implements \IteratorAggregate<MatcherInterface> */
 class Matchers implements \IteratorAggregate
@@ -24,9 +19,7 @@ class Matchers implements \IteratorAggregate
         ];
     }
 
-    /**
-     * @return \Traversable<MatcherInterface>
-     */
+    /** @return \Traversable<MatcherInterface> */
     public function getIterator(): \Traversable
     {
         foreach ($this->matchers as $matcher) {

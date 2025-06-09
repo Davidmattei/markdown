@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Fabricity\Markdown\Formatter;
 
 use Fabricity\Markdown\Element\Document;
-use Fabricity\Markdown\Element\Heading;
-use Fabricity\Markdown\Element\Paragraph;
-use Fabricity\Markdown\Element\ThematicBreak;
+use Fabricity\Markdown\Element\Type\Heading;
+use Fabricity\Markdown\Element\Type\Paragraph;
+use Fabricity\Markdown\Element\Type\ThematicBreak;
 
 class HtmlFormatter
 {
@@ -36,7 +36,7 @@ class HtmlFormatter
     {
         $replace = \preg_replace('/\\\\([!"#$%&\'()*+,\-.\/:;<=>?@\[\\\\\]^_`{|}~])/', '$1', $text);
 
-        if (!is_string($replace)) {
+        if (!\is_string($replace)) {
             throw new \RuntimeException('Expected a non-empty string');
         }
 
@@ -64,7 +64,7 @@ class HtmlFormatter
     {
         $result = \preg_replace('/\\\\\n/', '<br />'.\PHP_EOL, $input);
 
-        if (!is_string($result)) {
+        if (!\is_string($result)) {
             throw new \RuntimeException('Expected a non-empty string');
         }
 

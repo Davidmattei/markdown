@@ -6,38 +6,38 @@ namespace Fabricity\Markdown\Parser;
 
 use Fabricity\Markdown\Element\Document;
 use Fabricity\Markdown\Parser\Line\Lines;
+use Fabricity\Markdown\Parser\Matcher\Matchers;
 
-class Parser
+readonly class Parser
 {
-    private Matchers $matchers;
+    public function __construct(
+        private Matchers $matcher = new Matchers(),
+    ) {
+    }
 
-    public function __construct()
+    public function match(Context $context): void
     {
-        $this->matchers = new Matchers();
+        $currentIndex = $context->lines->getIndex();
+
+        foreach ($this->matcher as $matcher) {
+            $matcher->match($context);
+
+            if ($context->lines->getIndex() !== $currentIndex) {
+                return;
+            }
+        }
+
+        throw new \RuntimeException(\sprintf('No match line %d "%s"', $currentIndex, $context->line()->text));
     }
 
     public function parse(string $text): Document
     {
         $document = new Document();
+        $lines = Lines::fromText($text);
+        $context = new Context($lines, $document);
 
-        $element = null;
-        $lines = new Lines($text);
-
-        foreach ($lines as $line) {
-            $context = new Context($line, $document, $element);
-
-            foreach ($this->matchers as $matcher) {
-                $matcher->match($context);
-
-                if ($context->isParsed()) {
-                    $element = $context->element;
-                    break;
-                }
-            }
-
-            if (!$context->isParsed()) {
-                throw new \RuntimeException('Could not parse line');
-            }
+        while ($lines->hasLines()) {
+            $this->match($context);
         }
 
         return $document;
