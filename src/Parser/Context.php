@@ -19,7 +19,7 @@ class Context
     ) {
     }
 
-    public function advanceNextLine(): void
+    public function advance(): void
     {
         $this->lines->advance();
     }

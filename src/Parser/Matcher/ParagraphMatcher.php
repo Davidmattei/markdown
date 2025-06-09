@@ -14,7 +14,7 @@ class ParagraphMatcher implements MatcherInterface
         $line = $context->line();
 
         if ($line->isNewLine()) {
-            $context->clearElement()->advanceNextLine();
+            $context->clearElement()->advance();
 
             return;
         }
@@ -25,6 +25,6 @@ class ParagraphMatcher implements MatcherInterface
             $context->newElement(new Paragraph($line->text));
         }
 
-        $context->advanceNextLine();
+        $context->advance();
     }
 }

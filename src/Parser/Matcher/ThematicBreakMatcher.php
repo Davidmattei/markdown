@@ -22,7 +22,7 @@ class ThematicBreakMatcher implements MatcherInterface
 
         $context
             ->newElement(new ThematicBreak())
-            ->advanceNextLine()
+            ->advance()
         ;
     }
 }
