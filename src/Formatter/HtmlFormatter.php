@@ -7,6 +7,7 @@ namespace Fabricity\Markdown\Formatter;
 use Fabricity\Markdown\Element\Document;
 use Fabricity\Markdown\Element\Elements;
 use Fabricity\Markdown\Element\Type\BlockQuote;
+use Fabricity\Markdown\Element\Type\CodeBlock;
 use Fabricity\Markdown\Element\Type\Heading;
 use Fabricity\Markdown\Element\Type\Paragraph;
 use Fabricity\Markdown\Element\Type\ThematicBreak;
@@ -69,6 +70,11 @@ class HtmlFormatter
         return "<blockquote>\n$formatElements</blockquote>";
     }
 
+    private function formatCodeBlock(CodeBlock $element): string
+    {
+        return "<pre><code>{$element->content}\n</code></pre>";
+    }
+
     private function formatElements(Elements $elements): string
     {
         $output = '';
@@ -79,6 +85,7 @@ class HtmlFormatter
                 ThematicBreak::class => $this->formatThematicBreak(),
                 Paragraph::class => $this->formatParagraph($element),
                 BlockQuote::class => $this->formatBlockQuote($element),
+                CodeBlock::class => $this->formatCodeBlock($element),
                 default => '',
             };
 

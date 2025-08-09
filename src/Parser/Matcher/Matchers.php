@@ -16,6 +16,7 @@ class Matchers implements \IteratorAggregate
             new BlockQuoteMatcher(),
             new HeadingMatcher(),
             new ThematicBreakMatcher(),
+            new IndentedCodeBlockMatcher(),
             new ParagraphMatcher(),
         ];
     }
