@@ -6,27 +6,29 @@ namespace Fabricity\Markdown\Parser;
 
 use Fabricity\Markdown\Element\Document;
 use Fabricity\Markdown\Element\ElementInterface;
+use Fabricity\Markdown\Element\ParentInterface;
 use Fabricity\Markdown\Parser\Line\Line;
 use Fabricity\Markdown\Parser\Line\Lines;
 
 class Context
 {
-    public ?ElementInterface $element = null;
+    public ?ElementInterface $currentElement = null;
+    public ParentInterface $parent;
 
     public function __construct(
         public readonly Lines $lines,
-        private readonly Document $document,
+        Document $document,
     ) {
+        $this->parent = $document;
     }
 
-    public function advance(): void
+    public function finishElement(): self
     {
-        $this->lines->cursor->advanceLine();
-    }
-
-    public function clearElement(): self
-    {
-        $this->element = null;
+        if ($this->currentElement) {
+            $this->parent = $this->currentElement->getParent();
+        }
+        $this->currentElement = null;
+        $this->nextLine();
 
         return $this;
     }
@@ -38,8 +40,25 @@ class Context
 
     public function newElement(ElementInterface $element): self
     {
-        $this->document->getElements()->push($element);
-        $this->element = $element;
+        $this->parent->getElements()->push($element);
+        $this->currentElement = $element;
+
+        if ($element instanceof ParentInterface) {
+            $this->parent = $element;
+        }
+
+        return $this;
+    }
+
+    public function nextLine(): void
+    {
+        $this->lines->cursor->advanceLine();
+    }
+
+    public function remainingLine(Line $remaining): self
+    {
+        $remainingChar = \count($this->lines->current()) - \count($remaining);
+        $this->lines->cursor->advanceChar($remainingChar);
 
         return $this;
     }

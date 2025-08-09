@@ -14,17 +14,17 @@ class ParagraphMatcher implements MatcherInterface
         $line = $context->line();
 
         if ($line->isNewLine()) {
-            $context->clearElement()->advance();
+            $context->finishElement();
 
             return;
         }
 
-        if ($context->element instanceof Paragraph) {
-            $context->element->content .= "\n".$line->text;
+        if ($context->currentElement instanceof Paragraph) {
+            $context->currentElement->content .= "\n".$line->text;
         } else {
             $context->newElement(new Paragraph($line->text));
         }
 
-        $context->advance();
+        $context->nextLine();
     }
 }

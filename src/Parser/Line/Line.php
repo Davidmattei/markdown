@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Line;
 
-class Line
+class Line implements \Countable
 {
     public function __construct(public string $text = '')
     {
@@ -13,6 +13,11 @@ class Line
     public function containsOnly(string ...$chars): bool
     {
         return \strspn($this->text, \implode('', $chars)) === \strlen($this->text);
+    }
+
+    public function count(): int
+    {
+        return \strlen($this->text);
     }
 
     public function isNewLine(): bool
@@ -31,6 +36,15 @@ class Line
         return false;
     }
 
+    public function offset(int $offset): Line
+    {
+        if (0 === $offset) {
+            return $this;
+        }
+
+        return new Line(\substr($this->text, $offset));
+    }
+
     public function startsWith(string ...$chars): bool
     {
         foreach ($chars as $char) {
@@ -42,7 +56,7 @@ class Line
         return false;
     }
 
-    public function trimPrefix(int $count, string $char = ' '): Line
+    public function trimPrefix(int $count = 1, string $char = ' '): Line
     {
         $i = 0;
         $length = \strlen($this->text);

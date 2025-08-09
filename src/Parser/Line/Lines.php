@@ -17,7 +17,7 @@ class Lines
 
     public function current(): Line
     {
-        return $this->lines[$this->cursor->getLine()];
+        return $this->lines[$this->cursor->getLine()]->offset($this->cursor->getChar());
     }
 
     public static function fromText(string $text): self

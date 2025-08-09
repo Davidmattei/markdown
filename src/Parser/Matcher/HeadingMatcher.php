@@ -18,7 +18,7 @@ class HeadingMatcher implements MatcherInterface
 
         $context
             ->newElement(new Heading(\strlen($matches['level']), $matches['title']))
-            ->advance()
+            ->nextLine()
         ;
     }
 }

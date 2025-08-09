@@ -13,6 +13,7 @@ class Matchers implements \IteratorAggregate
     public function __construct()
     {
         $this->matchers = [
+            new BlockQuoteMatcher(),
             new HeadingMatcher(),
             new ThematicBreakMatcher(),
             new ParagraphMatcher(),

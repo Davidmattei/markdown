@@ -11,22 +11,17 @@ class BlockQuoteMatcher implements MatcherInterface
 {
     public function match(Context $context): void
     {
+        $line = $context->line()->trimPrefix(3);
 
+        if (!$line->startsWith('>')) {
+            return;
+        }
 
-        // @todo implement
+        if (!$context->parent instanceof BlockQuote) {
+            $context->newElement(new BlockQuote());
+        }
 
-        //        $line = $context->line()->trimPrefix(3);
-        //
-        //        if (!$line->startsWith('>')) {
-        //            return;
-        //        }
-        //
-        //        $remaining = $line->trimPrefix(1, '>')->trimPrefix(1);
-        //
-        //        $context
-        //            ->newElement(new BlockQuote())
-        //            ->remaining($remaining)
-        //            ->advance()
-        //        ;
+        $remaining = $line->trimPrefix(1, '>')->trimPrefix();
+        $context->remainingLine($remaining);
     }
 }
