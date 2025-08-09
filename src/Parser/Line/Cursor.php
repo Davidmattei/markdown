@@ -42,8 +42,8 @@ class Cursor
         return $this->line < $this->maxLines;
     }
 
-    public function value(): int
+    public function value(): string
     {
-        return $this->line + $this->char;
+        return $this->line.':'.$this->char;
     }
 }

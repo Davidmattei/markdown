@@ -35,8 +35,9 @@ readonly class Parser
 
         foreach ($this->matcher as $matcher) {
             $matcher->match($context);
+            $matchPosition = $cursor->value();
 
-            if ($currentPosition !== $cursor->value()) {
+            if ($currentPosition !== $matchPosition) {
                 return;
             }
         }

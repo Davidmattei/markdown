@@ -14,8 +14,8 @@ class BlockQuoteTest extends AbstractMarkdownTestCase
     {
         return [
             'simple example' => ["> # Foo\n> bar\n> baz\n", "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n"],
-            //            'omit tab or space' => ["># Foo\n>bar\n> baz\n", "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n"],
-            //            'indentation up to 3 spaces' => ["   > # Foo\n   > bar\n > baz\n", "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n"]
+            'omit tab or space' => ["># Foo\n>bar\n> baz\n", "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n"],
+            'indentation up to 3 spaces' => ["   > # Foo\n   > bar\n > baz\n", "<blockquote>\n<h1>Foo</h1>\n<p>bar\nbaz</p>\n</blockquote>\n"],
         ];
     }
 
