@@ -23,7 +23,7 @@ class CommonMarkTest extends TestCase
             throw new \RuntimeException('Invalid JSON: '.\json_last_error_msg());
         }
 
-        $testStatus = getenv('TEST_STATUS');
+        $testStatus = \getenv('TEST_STATUS');
         if ($testStatus) {
             $json = \array_filter($json, static fn (array $item): bool => ($item['status'] ?? false) === $testStatus);
         }
