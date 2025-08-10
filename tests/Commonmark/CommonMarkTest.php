@@ -13,6 +13,11 @@ class CommonMarkTest extends TestCase
     /** @return array<mixed> */
     public static function getData(): array
     {
+        $specSource = \getenv('TEST_SPEC_SOURCE');
+        if ('php' === $specSource) {
+            return CommonMarkSpecProvider::getCommonMarkSpec();
+        }
+
         if (!$contents = \file_get_contents(__DIR__.'/commonmark-spec.json')) {
             throw new \RuntimeException('Failed to read spec test data');
         }

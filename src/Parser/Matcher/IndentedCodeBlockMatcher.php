@@ -13,20 +13,24 @@ class IndentedCodeBlockMatcher implements MatcherInterface
     public function match(Context $context): void
     {
         $line = $context->line();
-        $content = $line->trimPrefix(4, ' ')->text;
 
         if ($context->currentElement instanceof CodeBlock && ($line->startsWith(' ') || $line->isNewLine())) {
-            $context->currentElement->append($content);
+            $context->currentElement->append($line->trimPrefix(4, ' ')->text);
             $context->nextLine();
 
             return;
         }
 
+        if ($line->startsWith("\t")) {
+            $line = $line->trimPrefix(1, "\t")->prepend('    ');
+        }
+
+
         if (!$line->startsWith('    ') || $context->currentElement instanceof Paragraph) {
             return;
         }
 
-        $context->newElement(new CodeBlock($content));
+        $context->newElement(new CodeBlock($line->trimPrefix(4, ' ')->text));
         $context->nextLine();
     }
 }

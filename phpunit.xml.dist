@@ -13,7 +13,7 @@
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <env name="TEST_STATUS" value="done"/>
+        <env name="TEST_SPEC_SOURCE" value="php"/>
     </php>
 
     <testsuites>

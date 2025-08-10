@@ -45,6 +45,11 @@ class Line implements \Countable
         return new Line(\substr($this->text, $offset));
     }
 
+    public function prepend(string $prepend): Line
+    {
+        return new Line($prepend.$this->text);
+    }
+
     public function startsWith(string ...$chars): bool
     {
         foreach ($chars as $char) {
