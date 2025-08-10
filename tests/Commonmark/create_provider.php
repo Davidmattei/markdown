@@ -24,11 +24,12 @@ function escapeForDoubleQuotes(string $str): string
 $data = [];
 
 foreach ($specs as $spec) {
+    $section = $spec['section'];
     $example = $spec['example'];
     $markdown = \escapeForDoubleQuotes($spec['markdown']);
     $html = \escapeForDoubleQuotes($spec['html']);
 
-    $data[] = "'Example $example' => [\"$markdown\", \"$html\"]";
+    $data[] = "'[$section] Example $example' => [\"$markdown\", \"$html\"]";
 
     $test = 1;
 }
@@ -44,6 +45,7 @@ namespace Fabricity\Markdown\Tests\Commonmark;
 
 class CommonMarkSpecProvider
 {
+    /** @return array<mixed> */
     public static function getCommonMarkSpec(): array
     {
         return [
