@@ -14,6 +14,10 @@ class CodeBlockTest extends AbstractMarkdownTestCase
     {
         return [
             'simple example' => ["    a simple\n      indented code block\n", "<pre><code>a simple\n  indented code block\n</code></pre>\n"],
+            'text inside' => ["    <a/>\n    *hi*\n\n    - one\n", "<pre><code>&lt;a/&gt;\n*hi*\n\n- one\n</code></pre>\n"],
+            'keep paragraph' => ["Foo\n    bar\n\n", "<p>Foo\nbar</p>\n"],
+            'paragraph after' => ["    foo\nbar\n", "<pre><code>foo\n</code></pre>\n<p>bar</p>\n"],
+            'chunks' => ["    chunk1\n\n    chunk2\n  \n \n \n    chunk3\n", "<pre><code>chunk1\n\nchunk2\n\n\n\nchunk3\n</code></pre>\n"],
         ];
     }
 

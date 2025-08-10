@@ -5,24 +5,28 @@ declare(strict_types=1);
 namespace Fabricity\Markdown\Parser\Matcher;
 
 use Fabricity\Markdown\Element\Type\CodeBlock;
+use Fabricity\Markdown\Element\Type\Paragraph;
 use Fabricity\Markdown\Parser\Context;
 
 class IndentedCodeBlockMatcher implements MatcherInterface
 {
     public function match(Context $context): void
     {
-        if (!$context->line()->startsWith('    ')) {
+        $line = $context->line();
+        $content = $line->trimPrefix(4, ' ')->text;
+
+        if ($context->currentElement instanceof CodeBlock && ($line->startsWith(' ') || $line->isNewLine())) {
+            $context->currentElement->append($content);
+            $context->nextLine();
+
             return;
         }
 
-        $content = $context->line()->trimPrefix(4, ' ')->text;
-
-        if ($context->currentElement instanceof CodeBlock) {
-            $context->currentElement->content .= "\n".$content;
-        } else {
-            $context->newElement(new CodeBlock($content));
+        if (!$line->startsWith('    ') || $context->currentElement instanceof Paragraph) {
+            return;
         }
 
+        $context->newElement(new CodeBlock($content));
         $context->nextLine();
     }
 }

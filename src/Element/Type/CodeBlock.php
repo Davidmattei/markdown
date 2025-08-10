@@ -8,9 +8,28 @@ use Fabricity\Markdown\Element\AbstractElement;
 
 class CodeBlock extends AbstractElement
 {
+    /** @var string[] */
+    private array $lines = [];
+
     public function __construct(
-        public string $content,
+        string $content,
     ) {
+        $this->append($content);
+    }
+
+    public function append(string $content): void
+    {
+        $this->lines[] = $content;
+    }
+
+    public function getContent(): string
+    {
+        return \implode("\n", $this->lines);
+    }
+
+    public function isSingleLine(): bool
+    {
+        return 1 === \count($this->lines);
     }
 
     /** @return array{'type': 'Code block', 'content': string} */
@@ -18,7 +37,7 @@ class CodeBlock extends AbstractElement
     {
         return [
             'type' => 'Code block',
-            'content' => $this->content,
+            'content' => $this->getContent(),
         ];
     }
 }

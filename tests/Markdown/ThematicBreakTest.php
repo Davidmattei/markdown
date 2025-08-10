@@ -17,7 +17,7 @@ class ThematicBreakTest extends AbstractMarkdownTestCase
             '3 scores' => ["---\n", "<hr />\n"],
             '3 underscore' => ["___\n", "<hr />\n"],
             '3 spaces' => ["   ****\n", "<hr />\n"],
-            '4 spaces' => ["    ***\n", "<p>    ***</p>\n"],
+            '4 spaces' => ["    ***\n", "<pre><code>***\n</code></pre>\n"],
             'not enough' => ["--\n", "<p>--</p>\n"],
             'more characters' => ["_____________________________________\n", "<hr />\n"],
             'spaces in between stars' => [" * * *\n", "<hr />\n"],

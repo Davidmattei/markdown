@@ -66,4 +66,9 @@ class Line implements \Countable
 
         return new Line(\substr($this->text, $i));
     }
+
+    public function trimStart(): Line
+    {
+        return new Line(\ltrim($this->text, " \t"));
+    }
 }

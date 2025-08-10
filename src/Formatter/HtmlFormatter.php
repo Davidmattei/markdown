@@ -70,9 +70,15 @@ class HtmlFormatter
         return "<blockquote>\n$formatElements</blockquote>";
     }
 
-    private function formatCodeBlock(CodeBlock $element): string
+    private function formatCodeBlock(CodeBlock $codeBlock): string
     {
-        return "<pre><code>{$element->content}\n</code></pre>";
+        $escapedContent = $this->escape($codeBlock->getContent());
+
+        if ($codeBlock->isSingleLine()) {
+            return "<pre><code>{$escapedContent}\n</code></pre>";
+        }
+
+        return "<pre><code>{$escapedContent}</code></pre>";
     }
 
     private function formatElements(Elements $elements): string
