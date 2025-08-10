@@ -17,10 +17,15 @@ class CommonMarkTest extends TestCase
             throw new \RuntimeException('Failed to read spec test data');
         }
 
-        /** @var array<int, array{'example': string, 'section': string, 'markdown': string, 'html': string}> $json */
+        /** @var array<int, array{'example': int, 'section': string, 'markdown': string, 'html': string, 'status'?: string}> $json */
         $json = \json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
         if (JSON_ERROR_NONE !== \json_last_error()) {
             throw new \RuntimeException('Invalid JSON: '.\json_last_error_msg());
+        }
+
+        $testStatus = getenv('TEST_STATUS');
+        if ($testStatus) {
+            $json = \array_filter($json, static fn (array $item): bool => ($item['status'] ?? false) === $testStatus);
         }
 
         /** @var array<mixed> $data */
