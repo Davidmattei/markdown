@@ -12,12 +12,17 @@ class HeadingMatcher implements MatcherInterface
 {
     public function match(Context $context): void
     {
+        if (null !== $atxHeading = $this->atxHeadings($context)) {
+            $context->newElement($atxHeading)->nextLine();
+        }
+    }
+
+    private function atxHeadings(Context $context): ?Heading
+    {
         $matches = [];
 
-        $test = (string) $context->line()->text;
-
         if (!\preg_match('/^ {0,3}(?<level>#{1,6})(?<title>(\s+.*))?$/', (string) $context->line()->text, $matches)) {
-            return;
+            return null;
         }
 
         $matchTitle = $matches['title'] ?? '';
@@ -30,8 +35,6 @@ class HeadingMatcher implements MatcherInterface
 
         $title = $title->replace('\#', '#')->trim();
 
-        $context
-            ->newElement(new Heading(\strlen($matches['level']), (string) $title))
-            ->nextLine();
+        return new Heading(\strlen($matches['level']), (string) $title);
     }
 }
