@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Document\Block\Type;
 
-use Fabricity\Markdown\Element\AbstractElement;
+use Fabricity\Markdown\Document\Block\AbstractBlock;
 
-class CodeBlock extends AbstractElement
+class CodeBlock extends AbstractBlock
 {
     /** @var string[] */
     private array $lines = [];

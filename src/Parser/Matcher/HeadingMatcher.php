@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Type\Heading;
+use Fabricity\Markdown\Document\Block\Type\Heading;
 use Fabricity\Markdown\Parser\Context;
 use Fabricity\Markdown\Parser\Text;
 
@@ -13,7 +13,7 @@ class HeadingMatcher implements MatcherInterface
     public function match(Context $context): void
     {
         if (null !== $atxHeading = $this->atxHeadings($context)) {
-            $context->newElement($atxHeading)->nextLine();
+            $context->newBlock($atxHeading)->nextLine();
         }
     }
 

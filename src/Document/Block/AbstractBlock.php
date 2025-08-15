@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element;
+namespace Fabricity\Markdown\Document\Block;
 
-abstract class AbstractElement implements ElementInterface, \JsonSerializable
+abstract class AbstractBlock implements BlockInterface, \JsonSerializable
 {
     private ParentInterface $parent;
 

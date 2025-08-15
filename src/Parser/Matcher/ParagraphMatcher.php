@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Type\Paragraph;
+use Fabricity\Markdown\Document\Block\Type\Paragraph;
 use Fabricity\Markdown\Parser\Context;
 
 class ParagraphMatcher implements MatcherInterface
@@ -14,15 +14,15 @@ class ParagraphMatcher implements MatcherInterface
         $line = $context->line();
 
         if ($line->isNewLine()) {
-            $context->finishElement();
+            $context->finishBlock();
 
             return;
         }
 
-        if ($context->currentElement instanceof Paragraph) {
-            $context->currentElement->content .= "\n".$line->trimStart()->text;
+        if ($context->currentBlock instanceof Paragraph) {
+            $context->currentBlock->content .= "\n".$line->trimStart()->text;
         } else {
-            $context->newElement(new Paragraph((string) $line));
+            $context->newBlock(new Paragraph((string) $line));
         }
 
         $context->nextLine();

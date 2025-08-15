@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Type\ThematicBreak;
+use Fabricity\Markdown\Document\Block\Type\ThematicBreak;
 use Fabricity\Markdown\Parser\Context;
 
 class ThematicBreakMatcher implements MatcherInterface
@@ -21,7 +21,7 @@ class ThematicBreakMatcher implements MatcherInterface
         }
 
         $context
-            ->newElement(new ThematicBreak())
+            ->newBlock(new ThematicBreak())
             ->nextLine()
         ;
     }

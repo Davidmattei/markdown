@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser;
 
-use Fabricity\Markdown\Element\Document;
+use Fabricity\Markdown\Document\Document;
 use Fabricity\Markdown\Parser\Line\Lines;
 use Fabricity\Markdown\Parser\Matcher\Matchers;
 

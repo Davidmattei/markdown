@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser;
 
-use Fabricity\Markdown\Element\Document;
-use Fabricity\Markdown\Element\ElementInterface;
-use Fabricity\Markdown\Element\ParentInterface;
+use Fabricity\Markdown\Document\Block\BlockInterface;
+use Fabricity\Markdown\Document\Block\ParentInterface;
+use Fabricity\Markdown\Document\Document;
 use Fabricity\Markdown\Parser\Line\Line;
 use Fabricity\Markdown\Parser\Line\Lines;
 
 class Context
 {
-    public ?ElementInterface $currentElement = null;
+    public ?BlockInterface $currentBlock = null;
     public ParentInterface $parent;
 
     public function __construct(
@@ -22,12 +22,12 @@ class Context
         $this->parent = $document;
     }
 
-    public function finishElement(): self
+    public function finishBlock(): self
     {
-        if ($this->currentElement) {
-            $this->parent = $this->currentElement->getParent();
+        if ($this->currentBlock) {
+            $this->parent = $this->currentBlock->getParent();
         }
-        $this->currentElement = null;
+        $this->currentBlock = null;
         $this->nextLine();
 
         return $this;
@@ -38,13 +38,13 @@ class Context
         return $this->lines->current();
     }
 
-    public function newElement(ElementInterface $element): self
+    public function newBlock(BlockInterface $block): self
     {
-        $this->parent->getElements()->push($element);
-        $this->currentElement = $element;
+        $this->parent->getBlocks()->push($block);
+        $this->currentBlock = $block;
 
-        if ($element instanceof ParentInterface) {
-            $this->parent = $element;
+        if ($block instanceof ParentInterface) {
+            $this->parent = $block;
         }
 
         return $this;

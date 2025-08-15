@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Type\BlockQuote;
+use Fabricity\Markdown\Document\Block\Type\BlockQuote;
 use Fabricity\Markdown\Parser\Context;
 
 class BlockQuoteMatcher implements MatcherInterface
@@ -18,7 +18,7 @@ class BlockQuoteMatcher implements MatcherInterface
         }
 
         if (!$context->parent instanceof BlockQuote) {
-            $context->newElement(new BlockQuote());
+            $context->newBlock(new BlockQuote());
         }
 
         $remaining = $line->trimPrefix(1, '>')->trimPrefix();

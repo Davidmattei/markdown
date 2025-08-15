@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Document\Block\Type;
 
-use Fabricity\Markdown\Element\AbstractElement;
+use Fabricity\Markdown\Document\Block\AbstractBlock;
+use Fabricity\Markdown\Document\Block\Inline;
 
-class Heading extends AbstractElement
+class Heading extends AbstractBlock
 {
+    public Inline $title;
+
     public function __construct(
         public int $level,
-        public string $title,
+        string $title,
     ) {
+        $this->title = new Inline($title);
     }
 
     /** @return array{'type': 'Heading', 'level': int, 'title': string} */
@@ -20,7 +24,7 @@ class Heading extends AbstractElement
         return [
             'type' => 'Heading',
             'level' => $this->level,
-            'title' => $this->title,
+            'title' => (string) $this->title,
         ];
     }
 }

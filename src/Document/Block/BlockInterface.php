@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element;
+namespace Fabricity\Markdown\Document\Block;
 
-interface ElementInterface
+interface BlockInterface
 {
     public function getParent(): ParentInterface;
 

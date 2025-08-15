@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Fabricity\Markdown\Element\Type;
+namespace Fabricity\Markdown\Document\Block\Type;
 
-use Fabricity\Markdown\Element\AbstractElement;
+use Fabricity\Markdown\Document\Block\AbstractBlock;
 
-class Paragraph extends AbstractElement
+class Paragraph extends AbstractBlock
 {
     public function __construct(
         public string $content,

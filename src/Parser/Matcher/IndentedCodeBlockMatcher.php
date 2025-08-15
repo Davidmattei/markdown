@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Parser\Matcher;
 
-use Fabricity\Markdown\Element\Type\CodeBlock;
-use Fabricity\Markdown\Element\Type\Paragraph;
+use Fabricity\Markdown\Document\Block\Type\CodeBlock;
+use Fabricity\Markdown\Document\Block\Type\Paragraph;
 use Fabricity\Markdown\Parser\Context;
 
 class IndentedCodeBlockMatcher implements MatcherInterface
@@ -14,8 +14,8 @@ class IndentedCodeBlockMatcher implements MatcherInterface
     {
         $line = $context->line();
 
-        if ($context->currentElement instanceof CodeBlock && ($line->text->startsWith(' ') || $line->isNewLine())) {
-            $context->currentElement->append((string) $line->trimPrefix(4));
+        if ($context->currentBlock instanceof CodeBlock && ($line->text->startsWith(' ') || $line->isNewLine())) {
+            $context->currentBlock->append((string) $line->trimPrefix(4));
             $context->nextLine();
 
             return;
@@ -26,11 +26,11 @@ class IndentedCodeBlockMatcher implements MatcherInterface
         }
 
 
-        if (!$line->text->startsWith('    ') || $context->currentElement instanceof Paragraph) {
+        if (!$line->text->startsWith('    ') || $context->currentBlock instanceof Paragraph) {
             return;
         }
 
-        $context->newElement(new CodeBlock((string) $line->trimPrefix(4)));
+        $context->newBlock(new CodeBlock((string) $line->trimPrefix(4)));
         $context->nextLine();
     }
 }

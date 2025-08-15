@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Fabricity\Markdown\Formatter;
 
-use Fabricity\Markdown\Element\Document;
-use Fabricity\Markdown\Element\Elements;
-use Fabricity\Markdown\Element\Type\BlockQuote;
-use Fabricity\Markdown\Element\Type\CodeBlock;
-use Fabricity\Markdown\Element\Type\Heading;
-use Fabricity\Markdown\Element\Type\Paragraph;
-use Fabricity\Markdown\Element\Type\ThematicBreak;
+use Fabricity\Markdown\Document\Block\Blocks;
+use Fabricity\Markdown\Document\Block\Inline;
+use Fabricity\Markdown\Document\Block\Type\BlockQuote;
+use Fabricity\Markdown\Document\Block\Type\CodeBlock;
+use Fabricity\Markdown\Document\Block\Type\Heading;
+use Fabricity\Markdown\Document\Block\Type\Paragraph;
+use Fabricity\Markdown\Document\Block\Type\ThematicBreak;
+use Fabricity\Markdown\Document\Document;
 
 class HtmlFormatter
 {
     public function format(Document $document): string
     {
-        return $this->formatElements($document->getElements());
+        return $this->formatBlocks($document->getBlocks());
     }
 
     private function escape(string $content): string
@@ -65,9 +66,29 @@ class HtmlFormatter
 
     private function formatBlockQuote(BlockQuote $blockQuote): string
     {
-        $formatElements = $this->formatElements($blockQuote->getElements());
+        $formatBlocks = $this->formatBlocks($blockQuote->getBlocks());
 
-        return "<blockquote>\n$formatElements</blockquote>";
+        return "<blockquote>\n$formatBlocks</blockquote>";
+    }
+
+    private function formatBlocks(Blocks $blocks): string
+    {
+        $output = '';
+
+        foreach ($blocks as $block) {
+            $output .= match (\get_class($block)) {
+                Heading::class => $this->formatHeading($block),
+                ThematicBreak::class => $this->formatThematicBreak(),
+                Paragraph::class => $this->formatParagraph($block),
+                BlockQuote::class => $this->formatBlockQuote($block),
+                CodeBlock::class => $this->formatCodeBlock($block),
+                default => '',
+            };
+
+            $output .= PHP_EOL;
+        }
+
+        return $output;
     }
 
     private function formatCodeBlock(CodeBlock $codeBlock): string
@@ -81,29 +102,16 @@ class HtmlFormatter
         return "<pre><code>$escapedContent</code></pre>";
     }
 
-    private function formatElements(Elements $elements): string
-    {
-        $output = '';
-
-        foreach ($elements as $element) {
-            $output .= match (\get_class($element)) {
-                Heading::class => $this->formatHeading($element),
-                ThematicBreak::class => $this->formatThematicBreak(),
-                Paragraph::class => $this->formatParagraph($element),
-                BlockQuote::class => $this->formatBlockQuote($element),
-                CodeBlock::class => $this->formatCodeBlock($element),
-                default => '',
-            };
-
-            $output .= PHP_EOL;
-        }
-
-        return $output;
-    }
-
     private function formatHeading(Heading $heading): string
     {
-        return "<h$heading->level>$heading->title</h$heading->level>";
+        $title = $this->formatInline($heading->title);
+
+        return "<h$heading->level>$title</h$heading->level>";
+    }
+
+    private function formatInline(Inline $title): string
+    {
+        return (string) $title;
     }
 
     private function formatParagraph(Paragraph $paragraph): string
