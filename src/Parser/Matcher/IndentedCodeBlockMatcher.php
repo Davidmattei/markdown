@@ -14,23 +14,23 @@ class IndentedCodeBlockMatcher implements MatcherInterface
     {
         $line = $context->line();
 
-        if ($context->currentElement instanceof CodeBlock && ($line->startsWith(' ') || $line->isNewLine())) {
-            $context->currentElement->append($line->trimPrefix(4, ' ')->text);
+        if ($context->currentElement instanceof CodeBlock && ($line->text->startsWith(' ') || $line->isNewLine())) {
+            $context->currentElement->append((string) $line->trimPrefix(4));
             $context->nextLine();
 
             return;
         }
 
-        if ($line->startsWith("\t")) {
+        if ($line->text->startsWith("\t")) {
             $line = $line->trimPrefix(1, "\t")->prepend('    ');
         }
 
 
-        if (!$line->startsWith('    ') || $context->currentElement instanceof Paragraph) {
+        if (!$line->text->startsWith('    ') || $context->currentElement instanceof Paragraph) {
             return;
         }
 
-        $context->newElement(new CodeBlock($line->trimPrefix(4, ' ')->text));
+        $context->newElement(new CodeBlock((string) $line->trimPrefix(4)));
         $context->nextLine();
     }
 }

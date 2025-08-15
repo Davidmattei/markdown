@@ -22,7 +22,10 @@ class Elements implements \IteratorAggregate, \JsonSerializable
         }
     }
 
-    public function jsonSerialize(): mixed
+    /**
+     * @return array<mixed>
+     */
+    public function jsonSerialize(): array
     {
         return $this->elements;
     }

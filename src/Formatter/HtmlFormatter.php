@@ -75,10 +75,10 @@ class HtmlFormatter
         $escapedContent = $this->escape($codeBlock->getContent());
 
         if ($codeBlock->isSingleLine()) {
-            return "<pre><code>{$escapedContent}\n</code></pre>";
+            return "<pre><code>$escapedContent\n</code></pre>";
         }
 
-        return "<pre><code>{$escapedContent}</code></pre>";
+        return "<pre><code>$escapedContent</code></pre>";
     }
 
     private function formatElements(Elements $elements): string

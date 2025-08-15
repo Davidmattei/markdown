@@ -22,7 +22,7 @@ class ParagraphMatcher implements MatcherInterface
         if ($context->currentElement instanceof Paragraph) {
             $context->currentElement->content .= "\n".$line->trimStart()->text;
         } else {
-            $context->newElement(new Paragraph($line->text));
+            $context->newElement(new Paragraph((string) $line));
         }
 
         $context->nextLine();

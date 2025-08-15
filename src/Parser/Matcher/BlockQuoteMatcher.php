@@ -13,7 +13,7 @@ class BlockQuoteMatcher implements MatcherInterface
     {
         $line = $context->line()->trimPrefix(3);
 
-        if (!$line->startsWith('>')) {
+        if (!$line->text->startsWith('>')) {
             return;
         }
 

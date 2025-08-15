@@ -6,19 +6,32 @@ namespace Fabricity\Markdown\Parser\Matcher;
 
 use Fabricity\Markdown\Element\Type\Heading;
 use Fabricity\Markdown\Parser\Context;
+use Fabricity\Markdown\Parser\Text;
 
 class HeadingMatcher implements MatcherInterface
 {
     public function match(Context $context): void
     {
         $matches = [];
-        if (!\preg_match('/^(?<level>#{1,6})\s+(?<title>.*)/', $context->line()->text, $matches)) {
+
+        $test = (string) $context->line()->text;
+
+        if (!\preg_match('/^ {0,3}(?<level>#{1,6})(?<title>(\s+.*))?$/', (string) $context->line()->text, $matches)) {
             return;
         }
 
+        $matchTitle = $matches['title'] ?? '';
+
+        if (\preg_match('/^(?<title>.+)?[ |\t]#+([ \t]+)?$/', $matchTitle, $matchEnd)) {
+            $title = new Text($matchEnd['title'] ?? '');
+        } else {
+            $title = new Text($matchTitle);
+        }
+
+        $title = $title->replace('\#', '#')->trim();
+
         $context
-            ->newElement(new Heading(\strlen($matches['level']), $matches['title']))
-            ->nextLine()
-        ;
+            ->newElement(new Heading(\strlen($matches['level']), (string) $title))
+            ->nextLine();
     }
 }

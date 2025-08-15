@@ -13,9 +13,9 @@ class ThematicBreakMatcher implements MatcherInterface
     {
         $line = $context->line()->trimPrefix(3);
 
-        if (!$line->startsWith('*', '-', '_')
-            || !$line->containsOnly('*', '-', '_', ' ')
-            || !$line->occursAtLeast(3, '*', '-', '_')
+        if (!$line->text->startsWith('*', '-', '_')
+            || !$line->text->containsOnly('*', '-', '_', ' ')
+            || !$line->text->occursAtLeast(3, '*', '-', '_')
         ) {
             return;
         }
